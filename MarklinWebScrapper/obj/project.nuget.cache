@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "a2nu9ZDIV7GQTeGmv9kwmCCcv2lLtOdDORhb4Z53xI3C4cdEofEzMnFKARk+QIE0wfuY6W4MkrLBowlT2Qv85Q==",
+  "success": true,
+  "projectFilePath": "D:\\Vincent\\Progra\\C#\\MarklinWebScrapper\\MarklinWebScrapper\\MarklinWebScrapper.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Vincent\\.nuget\\packages\\htmlagilitypack\\1.11.45\\htmlagilitypack.1.11.45.nupkg.sha512"
+  ],
+  "logs": []
+}
