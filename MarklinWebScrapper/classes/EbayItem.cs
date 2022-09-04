@@ -1,13 +1,13 @@
 public class EbayItem
 {
 	private int _price;
-	private string _title;
+	private string _title = default!;
 	//Is allowed to be null
-	private string? _localImagePath;
-	private string _uuid;
+	private string _localImagePath = default!;
+	private string _uuid = default!;
 	//Is allowed to be null
-	private string? _imageUrl;
-	private string _url;
+	private string _imageUrl = default!;
+	private string _url = default!;
 	
 	EbayItem(int newPrice, string newTitle, string newLocalImagePath, string newUUID, string newImageUrl, string newUrl)
 	{
