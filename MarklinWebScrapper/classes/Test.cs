@@ -1,9 +1,9 @@
-public class Test
+public static class Test
 {
-	private string Name;
-
-	public Test(string newName)
+	public static void Run()
 	{
-		Name = newName;
+		EbayItem item = new EbayItem(0, "", "", "", "");
+
+		//item.Title = null;
 	}
 }
