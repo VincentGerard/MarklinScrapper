@@ -3,6 +3,7 @@ using HtmlAgilityPack;
 using System.Text.RegularExpressions;
 using System.Net;
 using System.Xml.Serialization;
+using System.Collections.Generic;
 
 namespace MyApp
 {

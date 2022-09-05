@@ -1,3 +1,4 @@
+using System;
 public class EbayItem
 {
 	private int _price;
