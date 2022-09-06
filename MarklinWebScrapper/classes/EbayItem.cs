@@ -49,6 +49,7 @@ public class EbayItem
 	public void Show()
 	{
 		Console.WriteLine("Title   : " + Title);
+		Console.WriteLine("Price   : " + Price);
 		Console.WriteLine("UUID    : " + UUID);
 		Console.WriteLine("ImageUrl: " + ImageUrl);
 		Console.WriteLine("Url     : " + Url);
