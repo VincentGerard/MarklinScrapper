@@ -70,6 +70,7 @@ namespace MyApp
 			int maxPage = 1;
 			var lastStatusCode = HttpStatusCode.OK;
 			
+			
 			//https://www.ebay-kleinanzeigen.de/s-modellbau/m%C3%A4rklin/k0c249
 			//https://www.ebay-kleinanzeigen.de/s-marklin/k0
 			//https://www.ebay-kleinanzeigen.de/s-seite:1/marklin/k0
