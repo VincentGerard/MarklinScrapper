@@ -1,0 +1,2 @@
+To do list:
+-Redo update function, use the 10 latest articles instead of one to avoid problemes on item deletion

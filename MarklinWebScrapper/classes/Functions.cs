@@ -32,7 +32,6 @@ namespace MyApp
 		public static void ImportItemList(ref List<EbayItem> itemList)
 		{
 			itemList = ReadFromXmlFile<List<EbayItem>>("data/items.xml");
-			System.Console.WriteLine("LoadItemList: " + itemList.Count);
 		}
 
 		public static void ExportItemList(ref List<EbayItem> itemList)
@@ -42,17 +41,52 @@ namespace MyApp
 		//Updates the list of items in data/items.xml
 		public static void UpdateItemList(ref List<EbayItem> itemList)
 		{
-			List<EbayItem> newList = new List<EbayItem>();
-			ImportItemList(ref itemList);
-			foreach(EbayItem item in itemList)
+			List<EbayItem> pageList = new List<EbayItem>();
+			string lastItem = itemList[0].UUID;
+
+			System.Console.WriteLine("LastItem = " + lastItem);
+			for(int pageNumber = 1; pageNumber <= 50; pageNumber++)
 			{
-				newList.Insert(0, item);
-				newList.Insert(0, item);
-				newList.Insert(0, item);
-				newList.Insert(0, item);
+				try
+				{
+					List<EbayItem> page = Scrapper.GetEbayListFromPage(pageNumber);
+					if (page.Count == 0)
+					{
+						System.Console.WriteLine("[UpdateItemList]Could not load page, probably blocked...");
+						System.Console.WriteLine("[UpdateItemList]Sleeping 1 minute");
+						Thread.Sleep(60000);
+						pageNumber--;
+					}
+					else
+					{
+						//If we get the page, check if the last element from the  original list is inside
+						int index = -1;
+						for(int i = 0; i < page.Count(); i++)
+						{
+							if (page.ElementAt(i).UUID == lastItem)
+							{
+								System.Console.WriteLine("Element trouvé:");
+								index = i - 1;
+								i = page.Count();
+							}
+						}
+						//Add the whole page if the element isnt there, or part of the page until the element	
+						if (index == -1)
+							pageList.AddRange(page);
+						else
+						{
+							pageList.AddRange(page.Take(index));
+							pageNumber = 51;
+						}
+					}
+				}
+				catch (Exception e)
+				{
+					System.Console.WriteLine();
+				}
 			}
-			itemList = newList;
-			//itemList.Add(new EbayItem());
+			pageList.AddRange(itemList);
+			itemList = pageList;
 		}
 
 		/// <summary>

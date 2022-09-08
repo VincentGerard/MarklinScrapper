@@ -13,8 +13,10 @@ namespace MyApp
 		static HtmlWeb web = new HtmlWeb();
 		public static List<EbayItem> GetEbayListFromPage(int pageNumber)
 		{
+			string url = Url.ebayUrlStart + pageNumber + Url.ebayUrlEnd;
 			List<EbayItem> itemList = new List<EbayItem>();
-			HtmlDocument document = GetPage(Url.ebayUrlStart + pageNumber + Url.ebayUrlEnd);
+			System.Console.WriteLine("[GetEbayListFromPage]Url=" + url);
+			HtmlDocument document = GetPage(url);
 			if (document == null)
 				return itemList;
 
@@ -25,7 +27,7 @@ namespace MyApp
 			foreach(HtmlNode node in itemCollection)
 			{
 				EbayItem item = Functions.LoadEbayItemFromNode(node);
-				itemList.Insert(0, item);
+				itemList.Add(item);
 			}
 			return itemList;
 		}
