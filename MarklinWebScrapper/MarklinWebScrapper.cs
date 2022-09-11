@@ -47,7 +47,7 @@ namespace MyApp
 				System.Console.WriteLine("[Update]List= " + itemList.Count);
 				Functions.ImportItemList(ref itemList);
 				System.Console.WriteLine("[Update]Imported= " + itemList.Count);
-				Functions.UpdateItemList(ref itemList);
+				Functions.UpdateItemList(itemList);
 				System.Console.WriteLine("[Update]Updated = " + itemList.Count);
 				Functions.ExportItemList(itemList);
 				System.Environment.Exit(0);

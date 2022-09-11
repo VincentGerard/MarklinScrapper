@@ -39,67 +39,61 @@ namespace MyApp
 			WriteToXmlFile<List<EbayItem>>("data/items.xml", itemList);
 		}
 		//Updates the list of items in data/items.xml
-		public static void UpdateItemList(ref List<EbayItem> itemList)
+		public static void UpdateItemList(List<EbayItem> itemList)
 		{
+			//Wait time in seconds
 			int waitTime = 60;
 			List<EbayItem> pageList = new List<EbayItem>();
-			string lastItem = itemList[0].UUID;
+			List<EbayItem> recentList = itemList.GetRange(0,10);
 
-			System.Console.WriteLine("LastItem = " + lastItem);
 			for(int pageNumber = 1; pageNumber <= 50; pageNumber++)
 			{
-				System.Console.WriteLine("[Update]Loop");
+				Console.WriteLine("[UpdateItemList]Fetching page " + pageNumber);
 				try
 				{
 					List<EbayItem> page = Scrapper.GetEbayListFromPage(pageNumber);
-					if (page.Count == 0)
+					if (page == null || page.Count == 0)
 					{
-						System.Console.WriteLine("[UpdateItemList]Could not load page, probably blocked...");
-						System.Console.WriteLine("[UpdateItemList]Sleeping 1 minute");
-						Thread.Sleep(waitTime * 1000);
 						pageNumber--;
-						waitTime *= 2;
+						Console.WriteLine("[UpdateItemList]Error loading page " + pageNumber);
+						Console.WriteLine("[UpdateItemList]Waiting " + waitTime + " seconds");
+						Thread.Sleep(waitTime * 1000);
 					}
 					else
 					{
-						//If we get the page, check if the last element from the  original list is inside
-						int index = -1;
-						for(int i = 0; i < page.Count(); i++)
+						//If page loading if good
+						foreach(EbayItem item in page)
 						{
-							if (page.ElementAt(i).UUID == lastItem)
+							if (recentList.FindIndex(i => i.UUID == item.UUID) == -1)
 							{
-								index = i - 1;
-								i = page.Count();
-								System.Console.WriteLine("Element trouvé:");
-								System.Console.WriteLine("I= " + i);
-								System.Console.WriteLine("Index= " + index);
-								System.Console.WriteLine("Page size= " + page.Count);
+								//If the item is not present, we add it to the list
+								pageList.Add(item);
 							}
-						}
-						//Add the whole page if the element isnt there, or part of the page until the element	
-						if (index == -1)
-						{
-							System.Console.WriteLine("Adding whole page!");
-							pageList.AddRange(page);
-							pageNumber = 51;
-						}
-						else
-						{
-							System.Console.WriteLine("Adding " + index + " items!");
-							pageList.AddRange(page.Take(index));
-							pageNumber = 51;
+							else
+							{
+								//Item is present, we do not add it and stop here
+								Console.WriteLine("[UpdateItemList]Found last element");
+								pageNumber = 51;
+								break;
+							}
 						}
 					}
 				}
 				catch (Exception e)
 				{
-					System.Console.WriteLine();
+					System.Console.WriteLine("Error: " + e.Message);
+					Environment.Exit(1);
+				}
+				//Parse one page every minute to avoid getting kicked
+				if (pageNumber <= 50)
+				{
+					Console.WriteLine("[UpdateItemList]Waiting 60secs for next page");
+					Thread.Sleep(waitTime * 1000);
 				}
 			}
-
-			//Attention a comment on ajoute la page list, probleme de taille de liste, ca va prendre bcp de temps
-			pageList.AddRange(itemList);
-			itemList = pageList;
+			//If we have loaded every item into the temp list, we add them to the main list at the front
+			Console.WriteLine("[UpdateItemList]Added " + pageList.Count + " items!");
+			itemList.InsertRange(0,pageList);
 		}
 
 		/// <summary>
