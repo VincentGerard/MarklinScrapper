@@ -9,6 +9,7 @@ public static class Test
 {
 	public static void Run()
 	{
+		System.Console.WriteLine("Launching run test!");
 		List<EbayItem> list2 = Scrapper.GetEbayListFromPage(2);
 		List<EbayItem> list3 = Scrapper.GetEbayListFromPage(3);
 

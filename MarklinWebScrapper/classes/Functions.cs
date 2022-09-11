@@ -19,7 +19,7 @@ namespace MyApp
 			stringPrice = Regex.Match(stringPrice, @"\d+").Value;
 			if (stringPrice.Length != 0)
 				item.Price = int.Parse(stringPrice);
-			title = node.SelectNodes(".//p[@class='aditem-main--middle--description']").First().InnerText;
+			title = node.SelectNodes(".//a[@class='ellipsis']").First().InnerText;
 			item.Title = Regex.Replace(title, @"\t|\n|\r", "");
 			item.UUID = node.SelectNodes("article[@class='aditem']").First().Attributes["data-adid"].Value;
 			HtmlNodeCollection imageCollection = node.SelectNodes(".//div[@class='imagebox srpimagebox']");
@@ -34,19 +34,21 @@ namespace MyApp
 			itemList = ReadFromXmlFile<List<EbayItem>>("data/items.xml");
 		}
 
-		public static void ExportItemList(ref List<EbayItem> itemList)
+		public static void ExportItemList(List<EbayItem> itemList)
 		{
 			WriteToXmlFile<List<EbayItem>>("data/items.xml", itemList);
 		}
 		//Updates the list of items in data/items.xml
 		public static void UpdateItemList(ref List<EbayItem> itemList)
 		{
+			int waitTime = 60;
 			List<EbayItem> pageList = new List<EbayItem>();
 			string lastItem = itemList[0].UUID;
 
 			System.Console.WriteLine("LastItem = " + lastItem);
 			for(int pageNumber = 1; pageNumber <= 50; pageNumber++)
 			{
+				System.Console.WriteLine("[Update]Loop");
 				try
 				{
 					List<EbayItem> page = Scrapper.GetEbayListFromPage(pageNumber);
@@ -54,8 +56,9 @@ namespace MyApp
 					{
 						System.Console.WriteLine("[UpdateItemList]Could not load page, probably blocked...");
 						System.Console.WriteLine("[UpdateItemList]Sleeping 1 minute");
-						Thread.Sleep(60000);
+						Thread.Sleep(waitTime * 1000);
 						pageNumber--;
+						waitTime *= 2;
 					}
 					else
 					{
@@ -65,16 +68,24 @@ namespace MyApp
 						{
 							if (page.ElementAt(i).UUID == lastItem)
 							{
-								System.Console.WriteLine("Element trouvé:");
 								index = i - 1;
 								i = page.Count();
+								System.Console.WriteLine("Element trouvé:");
+								System.Console.WriteLine("I= " + i);
+								System.Console.WriteLine("Index= " + index);
+								System.Console.WriteLine("Page size= " + page.Count);
 							}
 						}
 						//Add the whole page if the element isnt there, or part of the page until the element	
 						if (index == -1)
+						{
+							System.Console.WriteLine("Adding whole page!");
 							pageList.AddRange(page);
+							pageNumber = 51;
+						}
 						else
 						{
+							System.Console.WriteLine("Adding " + index + " items!");
 							pageList.AddRange(page.Take(index));
 							pageNumber = 51;
 						}
@@ -85,6 +96,8 @@ namespace MyApp
 					System.Console.WriteLine();
 				}
 			}
+
+			//Attention a comment on ajoute la page list, probleme de taille de liste, ca va prendre bcp de temps
 			pageList.AddRange(itemList);
 			itemList = pageList;
 		}

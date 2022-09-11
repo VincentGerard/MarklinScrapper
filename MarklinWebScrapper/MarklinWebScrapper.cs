@@ -47,9 +47,9 @@ namespace MyApp
 				System.Console.WriteLine("[Update]List= " + itemList.Count);
 				Functions.ImportItemList(ref itemList);
 				System.Console.WriteLine("[Update]Imported= " + itemList.Count);
-				Functions.UpdateItemList(ref itemList);				
+				Functions.UpdateItemList(ref itemList);
 				System.Console.WriteLine("[Update]Updated = " + itemList.Count);
-				Functions.ExportItemList(ref itemList);
+				Functions.ExportItemList(itemList);
 				System.Environment.Exit(0);
 			}
 			else if (key.Key == ConsoleKey.G)
@@ -61,7 +61,7 @@ namespace MyApp
 				int pageNumber = int.Parse(line);
 				System.Console.WriteLine("[Get]Fetching page " + pageNumber);
 				itemList = Scrapper.GetEbayListFromPage(pageNumber);
-				Functions.ExportItemList(ref itemList);
+				Functions.ExportItemList(itemList);
 				System.Console.WriteLine(itemList.Count());
 				System.Environment.Exit(0);
 			}
