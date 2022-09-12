@@ -56,6 +56,7 @@ namespace MyApp
 					{
 						pageNumber--;
 						Console.WriteLine("[UpdateItemList]Error loading page " + pageNumber);
+						Console.WriteLine("[UpdateItemList]Status code: " + Scrapper.web.StatusCode);
 						Console.WriteLine("[UpdateItemList]Waiting " + waitTime + " seconds");
 						Thread.Sleep(waitTime * 1000);
 					}

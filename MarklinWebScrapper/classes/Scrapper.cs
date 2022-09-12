@@ -10,7 +10,11 @@ namespace MyApp
 {
 	public static class Scrapper
 	{	
-		static HtmlWeb web = new HtmlWeb();
+		public static HtmlWeb web = new HtmlWeb();
+		static Scrapper()
+		{
+			web.UserAgent = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.97 Safari/537.11";
+		}
 		public static List<EbayItem> GetEbayListFromPage(int pageNumber)
 		{
 			string url = Url.ebayUrlStart + pageNumber + Url.ebayUrlEnd;
@@ -31,7 +35,7 @@ namespace MyApp
 			}
 			return itemList;
 		}
-		public static HtmlDocument GetPage(string page)
+		private static HtmlDocument GetPage(string page)
 		{
 			return web.Load(page);
 		}
