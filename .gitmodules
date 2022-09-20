@@ -1,6 +1,0 @@
-[submodule "MarklinWebScrapper/lib/MarklinScrapper"]
-	path = MarklinWebScrapper/lib/MarklinScrapper
-	url = https://github.com/VincentGerard/MarklinScrapper
-[submodule "MarklinWebScrapper/lib/VGLib"]
-	path = MarklinWebScrapper/lib/VGLib
-	url = https://github.com/VincentGerard/VGLib

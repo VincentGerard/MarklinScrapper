@@ -402,4 +402,4 @@ FodyWeavers.xsd
 # End of https://www.toptal.com/developers/gitignore/api/csharp
 
 
-MarklinWebScrapper/data/*
+MarklinWebScrapper/data/items.xml

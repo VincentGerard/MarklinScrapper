@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 using System.Net;
 using System.Xml.Serialization;
 using System.Collections.Generic;
+using VGLib;
 
 namespace MyApp
 {
@@ -116,6 +117,11 @@ namespace MyApp
 				writer = new StreamWriter(filePath, append);
 				serializer.Serialize(writer, objectToWrite);
 			}
+			catch(Exception e)
+			{
+				Log.write("[WriteToXmlFile]Exception caught, message: " + e.Message);
+				Environment.Exit(-1);
+			}
 			finally
 			{
 				if (writer != null)
@@ -138,6 +144,11 @@ namespace MyApp
 				var serializer = new XmlSerializer(typeof(T));
 				reader = new StreamReader(filePath);
 				return (T)serializer.Deserialize(reader);
+			}
+			catch(Exception e)
+			{
+				Log.write("[ReadFromXmlFile]Exception caught, message: " + e.Message);
+				Environment.Exit(-1);
 			}
 			finally
 			{
