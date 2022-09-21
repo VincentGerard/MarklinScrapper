@@ -14,19 +14,28 @@ namespace MyApp
 		{
 			EbayItem item = new EbayItem();
 
-			string stringPrice = node.SelectNodes(".//p[@class='aditem-main--middle--price']").First().InnerText;
-			string title = "";
-					
-			stringPrice = Regex.Match(stringPrice, @"\d+").Value;
-			if (stringPrice.Length != 0)
-				item.Price = int.Parse(stringPrice);
-			title = node.SelectNodes(".//a[@class='ellipsis']").First().InnerText;
-			item.Title = Regex.Replace(title, @"\t|\n|\r", "");
-			item.UUID = node.SelectNodes("article[@class='aditem']").First().Attributes["data-adid"].Value;
-			HtmlNodeCollection imageCollection = node.SelectNodes(".//div[@class='imagebox srpimagebox']");
-			if (imageCollection != null)
-				item.ImageUrl = imageCollection.First().Attributes["data-imgsrc"].Value;
-			item.Url = Url.ebay + node.SelectNodes(".//a").First().Attributes["href"].Value;
+			try
+			{
+				HtmlNodeCollection stringCollection = node.SelectNodes(".//p[@class='aditem-main--middle--price']");
+				if (stringCollection != null)
+					item.Price = int.Parse(Regex.Match(stringCollection.First().InnerText ,@"\d+").Value);
+				HtmlNodeCollection titleCollection = node.SelectNodes(".//a[@class='ellipsis']");
+				if (titleCollection != null)
+					item.Title = Regex.Replace(titleCollection.First().InnerText, @"\t\n\r", "");
+				HtmlNodeCollection uuidCollection = node.SelectNodes("article[@class='aditem']");
+				if (uuidCollection != null)
+					item.UUID = uuidCollection.First().Attributes["data-adid"].Value;
+				HtmlNodeCollection imageCollection = node.SelectNodes(".//div[@class='imagebox srpimagebox']");
+				if (imageCollection != null)
+					item.ImageUrl = imageCollection.First().Attributes["data-imgsrc"].Value;
+				HtmlNodeCollection urlCollection = node.SelectNodes(".//a");
+				if (urlCollection != null)
+					item.Url = Url.ebay + urlCollection.First().Attributes["href"].Value;
+			}
+			catch (Exception e)
+			{
+				Log.write("[LoadEbayItemFromNode]Exception caught: " + e.Message);
+			}
 			return item;
 		}
 
@@ -143,11 +152,14 @@ namespace MyApp
 			{
 				var serializer = new XmlSerializer(typeof(T));
 				reader = new StreamReader(filePath);
+				T retValue = (T)serializer.Deserialize(reader);
+				if (retValue == null)
+					retValue = new T();
 				if (reader != null)
 				{
 					reader.Close();
 				}
-				return (T)serializer.Deserialize(reader);
+				return retValue;
 			}
 			catch(Exception e)
 			{

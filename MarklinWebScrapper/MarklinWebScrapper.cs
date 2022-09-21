@@ -55,7 +55,7 @@ namespace MyApp
 			else if (key.Key == ConsoleKey.G)
 			{
 				System.Console.WriteLine("[Get]What page should I fetch?");
-				string? line = Console.ReadLine();
+				string line = Console.ReadLine();
 				if (line == null)
 					System.Environment.Exit(1);
 				int pageNumber = int.Parse(line);
