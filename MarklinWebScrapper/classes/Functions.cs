@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 using System.Net;
 using System.Xml.Serialization;
 using System.Collections.Generic;
-using VGLib;
+
 
 namespace MyApp
 {
@@ -13,6 +13,8 @@ namespace MyApp
 		public static EbayItem LoadEbayItemFromNode(HtmlNode node)
 		{
 			EbayItem item = new EbayItem();
+
+	
 
 			try
 			{
