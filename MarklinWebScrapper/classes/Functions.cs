@@ -143,18 +143,17 @@ namespace MyApp
 			{
 				var serializer = new XmlSerializer(typeof(T));
 				reader = new StreamReader(filePath);
+				if (reader != null)
+				{
+					reader.Close();
+				}
 				return (T)serializer.Deserialize(reader);
 			}
 			catch(Exception e)
 			{
 				Log.write("[ReadFromXmlFile]Exception caught, message: " + e.Message);
-				Environment.Exit(-1);
 			}
-			finally
-			{
-				if (reader != null)
-					reader.Close();
-			}
+			return new T();
 		}
 	}
 }
