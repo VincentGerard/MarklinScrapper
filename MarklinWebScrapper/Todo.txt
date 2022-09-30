@@ -1,0 +1,6 @@
+Gestion choises:
+We only take references with 4 digits or more
+
+
+Paring of items must check case sensitivity and change ' ' to '_' and '-' to '_'
+Always check case sensitivity to avoid issues in finding the brand 
