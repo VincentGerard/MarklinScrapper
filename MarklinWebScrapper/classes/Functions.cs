@@ -32,6 +32,7 @@ namespace MyApp
 					item.Url = Url.ebay + urlCollection.First().Attributes["href"].Value;
 
 				item.Article = new Article(Utils.getReferenceFromString(item.Title), Utils.getTrainBrandFromString(item.Title), 1);
+				Log.write("Number: " + item.Article.Reference);
 			}
 			catch (Exception e)
 			{

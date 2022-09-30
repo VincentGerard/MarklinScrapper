@@ -4,8 +4,6 @@ namespace MyApp
 	{
 		public static int getReferenceFromString(string title)
 		{
-			int reference = 0;
-
 			for(int i = 0; i < title.Length; i++)
 			{
 				if (i + 3 < title.Length && isDigit(title[i]) && isDigit(title[i + 1]) && isDigit(title[i + 2]) && isDigit(title[i + 3]))
@@ -14,40 +12,14 @@ namespace MyApp
 					{
 						if (i + 5 < title.Length && isDigit(title[i]) && isDigit(title[i + 1]) && isDigit(title[i + 2]) && isDigit(title[i + 3]) && isDigit(title[i + 4]) && isDigit(title[i + 5]))
 						{
-							reference += title[i];
-							reference *= 10;
-							reference += title[i + 1];
-							reference *= 10;
-							reference += title[i + 2];
-							reference *= 10;
-							reference += title[i + 3];
-							reference *= 10;
-							reference += title[i + 4];
-							reference *= 10;
-							reference += title[i + 5];
-							return reference;
+							return numberFrom6Char(title[i], title[i + 1], title[i + 2], title[i + 3], title[i + 4], title[i + 5]);
 						}
-						reference += title[i];
-						reference *= 10;
-						reference += title[i + 1];
-						reference *= 10;
-						reference += title[i + 2];
-						reference *= 10;
-						reference += title[i + 3];
-						reference *= 10;
-						reference += title[i + 4];
-						return reference;
+						return numberFrom5Char(title[i], title[i + 1], title[i + 2], title[i + 3], title[i + 4]);
 					}
-					reference += title[i];
-					reference *= 10;
-					reference += title[i + 1];
-					reference *= 10;
-					reference += title[i + 2];
-					reference *= 10;
-					reference += title[i + 3];
+					return numberFrom4Char(title[i], title[i + 1], title[i + 2], title[i + 3]);
 				}
 			}
-			return reference;
+			return 0;
 		}
 
 		public static TrainBrand getTrainBrandFromString(string title)
@@ -65,7 +37,47 @@ namespace MyApp
 
 		public static int numberFrom4Char(char c1, char c2, char c3, char c4)
 		{
-			
+			int result = c1 - 48;
+			result *= 10;
+			result += c2 - 48;
+			result *= 10;
+			result += c3 - 48;
+			result *= 10;
+			result += c4 - 48;
+			return result;
+		}
+
+		public static int numberFrom5Char(char c1, char c2, char c3, char c4, char c5)
+		{
+			int result = c1 - 48;
+			System.Console.WriteLine("5");
+			result *= 10;
+			result += c2 - 48;
+			result *= 10;
+			result += c3 - 48;
+			result *= 10;
+			result += c4 - 48;
+			result *= 10;
+			result += c5 - 48;
+			return result;
+		}
+
+		public static int numberFrom6Char(char c1, char c2, char c3, char c4, char c5, char c6)
+		{
+			int result = c1 - 48;
+
+			System.Console.WriteLine("6");
+			result *= 10;
+			result += c2 - 48;
+			result *= 10;
+			result += c3 - 48;
+			result *= 10;
+			result += c4 - 48;
+			result *= 10;
+			result += c5 - 48;
+			result *= 10;
+			result += c6 - 48;
+			return result;
 		}
 	}
 }
