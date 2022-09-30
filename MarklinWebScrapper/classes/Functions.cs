@@ -15,9 +15,11 @@ namespace MyApp
 
 			try
 			{
-				HtmlNodeCollection stringCollection = node.SelectNodes(".//p[@class='aditem-main--middle--price']");
+				HtmlNodeCollection stringCollection = node.SelectNodes(".//p[@class='aditem-main--middle--price-shipping--price']");
 				if (stringCollection != null)
 					item.Price = int.Parse(Regex.Match(stringCollection.First().InnerText ,@"\d+").Value);
+				if (stringCollection == null)
+					Log.write("Price is null");
 				HtmlNodeCollection titleCollection = node.SelectNodes(".//a[@class='ellipsis']");
 				if (titleCollection != null)
 					item.Title = Regex.Replace(titleCollection.First().InnerText, @"\t\n\r", "");
