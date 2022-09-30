@@ -33,6 +33,8 @@ namespace MyApp
 
 				item.Article = new Article(Utils.getReferenceFromString(item.Title), Utils.getTrainBrandFromString(item.Title), 1);
 				Log.write("Number: " + item.Article.Reference);
+				Log.write("Price: " + item.Price);
+				Log.write(Environment.NewLine);
 			}
 			catch (Exception e)
 			{

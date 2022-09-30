@@ -31,7 +31,10 @@ namespace MyApp
 			foreach(HtmlNode node in itemCollection)
 			{
 				EbayItem item = Functions.LoadEbayItemFromNode(node);
-				itemList.Add(item);
+				if (item.Url.Length == 0)
+					Log.write("[GetEbayListFromPage]Not adding empty EbayItem");
+				else
+					itemList.Add(item);
 			}
 			return itemList;
 		}
