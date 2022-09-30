@@ -9,19 +9,21 @@ namespace MyApp
 		private string _uuid = default;
 		private string _imageUrl = default;
 		private string _url = default;
+		private Article _article;
 		
-		public EbayItem() : this(0,"","","","")
+		public EbayItem() : this(0,"","","","", new Article())
 		{
 
 		}
 		
-		public EbayItem(int newPrice, string newTitle, string newUUID, string newImageUrl, string newUrl)
+		public EbayItem(int newPrice, string newTitle, string newUUID, string newImageUrl, string newUrl, Article newArticle)
 		{
 			Price = newPrice;
 			Title = newTitle;
 			UUID = newUUID;
 			ImageUrl = newImageUrl;
 			Url = newUrl;
+			Article = newArticle;
 		}
 
 		public int Price{
@@ -67,6 +69,10 @@ namespace MyApp
 				else
 					_url = value;
 			}
+		}
+		public Article Article{
+			get{return _article;}
+			set{_article = value;}
 		}
 
 		public void Show()

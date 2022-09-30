@@ -2,14 +2,14 @@ using System;
 
 namespace MyApp
 {
-	class Article
+	public class Article
 	{
 		private int _reference;
 		private int _quantity;
 		private TrainBrand _brand;
 
 
-		public Article() : this(0, TrainBrand.Other, 0)
+		public Article() : this(0, TrainBrand.Other, 1)
 		{
 
 		}

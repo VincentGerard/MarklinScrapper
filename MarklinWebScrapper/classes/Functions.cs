@@ -5,7 +5,6 @@ using System.Net;
 using System.Xml.Serialization;
 using System.Collections.Generic;
 
-
 namespace MyApp
 {
 	public static class Functions
@@ -13,8 +12,6 @@ namespace MyApp
 		public static EbayItem LoadEbayItemFromNode(HtmlNode node)
 		{
 			EbayItem item = new EbayItem();
-
-	
 
 			try
 			{
@@ -33,6 +30,8 @@ namespace MyApp
 				HtmlNodeCollection urlCollection = node.SelectNodes(".//a");
 				if (urlCollection != null)
 					item.Url = Url.ebay + urlCollection.First().Attributes["href"].Value;
+
+				item.Article = new Article(Utils.getReferenceFromString(item.Title), Utils.getTrainBrandFromString(item.Title), 1);
 			}
 			catch (Exception e)
 			{
@@ -50,6 +49,7 @@ namespace MyApp
 		{
 			WriteToXmlFile<List<EbayItem>>("data/items.xml", itemList);
 		}
+
 		//Updates the list of items in data/items.xml
 		public static void UpdateItemList(List<EbayItem> itemList)
 		{
